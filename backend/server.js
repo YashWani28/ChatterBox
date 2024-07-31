@@ -7,10 +7,10 @@ dotenv.config();
 const authRoutes = require("./routes/authRoutes"); 
 const messageRoutes = require("./routes/messageRoutes"); 
 const userRoutes = require("./routes/userRoutes"); 
+const {app,server} =require("./socket/socket")
 
 
 
-const app = express();
 const PORT = process.env.PORT || 5000
 
 app.use(cors({
@@ -27,6 +27,6 @@ app.use("/api/users",userRoutes);
 
 
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     connectDB();
     console.log(`Server running on port ${PORT}`)});
