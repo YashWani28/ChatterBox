@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require('express')
 const connectDB = require("./db/connectDb");
 const dotenv = require("dotenv");
@@ -10,7 +11,7 @@ const userRoutes = require("./routes/userRoutes");
 const {app,server} =require("./socket/socket")
 
 
-
+//const __dirname = path.resolve();
 const PORT = process.env.PORT || 5000
 
 app.use(cors({
@@ -25,7 +26,10 @@ app.use("/api/auth",authRoutes);
 app.use("/api/messages",messageRoutes);
 app.use("/api/users",userRoutes);
 
-
+app.use(express.static(path.join(__dirname,"/frontend/dist")))
+app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"../frontend/dist/index.html"));
+})
 
 server.listen(PORT,()=>{
     connectDB();
